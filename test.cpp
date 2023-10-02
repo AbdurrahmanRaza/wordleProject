@@ -6,6 +6,16 @@ Context(TODO){
     /*
         your test cases here
     */
+
+    /*
+
+    Test for:
+    - if word is 5 letters long
+    - characters in word are all letters
+    - if inputted word is even actually a word
+    - 
+
+    */
 };
 
 int main(int argc, const char* argv[]){
