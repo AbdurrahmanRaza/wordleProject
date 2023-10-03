@@ -1,3 +1,4 @@
+#include <cctype>
 #include <iostream>
 #include <string>
 
@@ -8,12 +9,12 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
     // TODO: Select this word randomly from words.txt
-    string solution = "slate";
+    string solution = selectRandomWord();
 
     string attempt;
     int numAttempts = 0;
 
-    while ((attempt != solution) && (numAttempts < 6)){
+    while ((numAttempts < 6)){
 
         bool validAttempt = true;
 
@@ -21,14 +22,26 @@ int main(int argc, char* argv[]) {
 
         if (attempt.length() != 5) {
             validAttempt = false;
-            cout << "Invalid user input." << endl;
+            cout << "Input is wrong length, try again" << endl;
         }
 
-        for (char letter : attempt){
-            if (!isalpha(letter)) {
+        if (validAttempt){
+            for (int i = 0; i < attempt.length(); i++){
+                if (!isalpha(attempt[i])) {
+                    validAttempt = false;
+                    cout << "Only input letters, try again" << endl;
+                    break;
+                }
+                else {
+                    attempt[i] = tolower(attempt[i]);
+                }
+            }
+        }
+
+        if (validAttempt){
+            if (!wordIsAllowed(attempt)){
                 validAttempt = false;
-                cout << "Invalid user input." << endl;
-                break;
+                cout << "Word is not allowed, try again" << endl;
             }
         }
 
@@ -40,11 +53,11 @@ int main(int argc, char* argv[]) {
 
             for (int i = 0; i < 5; i++){
                 if (attempt[i] == solution[i]){
-                    solution[i] = '-';
+                    //solution[i] = '-';
                     cout << green(attempt[i]) << " ";
                 }
                 else if (contains(attempt[i], solution) != -1) {
-                    solution[contains(attempt[i], solution)] = '-';
+                    //solution[contains(attempt[i], solution)] = '-';
                     cout << yellow(attempt[i]) << " ";
                 }
                 else {
@@ -53,6 +66,8 @@ int main(int argc, char* argv[]) {
             }
             cout << endl;
         }
+
+        if (attempt == solution) break;
 
     }
 
