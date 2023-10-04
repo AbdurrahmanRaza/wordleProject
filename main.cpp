@@ -67,9 +67,14 @@ int main(int argc, char* argv[]) {
             cout << endl;
         }
 
-        if (attempt == solution) break;
+        if (attempt == solution) {
+            cout << "You got it! The word is " << solution << endl;
+            return 0;
+        }
 
     }
+
+    cout << "Game over! The word is " << solution << endl;
 
     return 0;
 }
