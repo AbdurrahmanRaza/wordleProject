@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <igloo/igloo.h>
 
 #include<stdio.h>
@@ -35,7 +36,7 @@ Context(TODO){
     }
 
     Spec(test_stale){
-        std::string result = exec("echo state| ./temp");
+        std::string result = exec("echo stale| ./temp");
         std::string expected = "";
         expected += green('s') + " ";
         expected += yellow('t') + " ";
@@ -46,7 +47,7 @@ Context(TODO){
     }
 
     Spec(test_teams){
-        std::string result = exec("echo state| ./temp");
+        std::string result = exec("echo teams| ./temp");
         std::string expected = "";
         expected += yellow('t') + " ";
         expected += yellow('e') + " ";

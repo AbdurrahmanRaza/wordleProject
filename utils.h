@@ -89,4 +89,74 @@ bool contains(std::vector<int> v, int num){
     return false;
 }
 
+bool validifyAttempt(std::string attempt){
+    bool validAttempt = true;
+
+    if (attempt.length() != 5) {
+        validAttempt = false;
+        std::cout << "Input is wrong length, try again" << std::endl;
+    }
+
+    if (validAttempt){
+        for (int i = 0; i < attempt.length(); i++){
+            if (!isalpha(attempt[i])) {
+                validAttempt = false;
+                std::cout << "Only input letters, try again" << std::endl;
+                break;
+            }
+            else {
+                attempt[i] = tolower(attempt[i]);
+            }
+        }
+    }
+
+    if (validAttempt){
+        if (!wordIsAllowed(attempt)){
+            validAttempt = false;
+            std::cout << "Word is not allowed, try again" << std::endl;
+        }
+    }
+
+    return validAttempt;
+}
+
+void checkAttempt(std::string attempt, std::string solution, std::vector<int> greenPos){
+    for (int i = 0; i < 5; i++){
+        if (attempt[i] == solution[i]){
+            //solution[i] = '-';
+            std::cout << green(attempt[i]) << " ";
+            //greenPos.push_back(i);
+        }
+        else if (contains(attempt[i], solution) != -1) {
+            if (solution[contains(attempt[i], solution)] == attempt[contains(attempt[i], solution)]){
+                //solution[contains(attempt[i], solution)] = '-';
+                std::cout << gray(attempt[i]) << " ";
+            }
+            else {
+                //solution[contains(attempt[i], solution)] = '-';
+                std::cout << yellow(attempt[i]) << " ";
+            }
+            
+        }
+        else {
+            std::cout << gray(attempt[i]) << " ";
+        }
+    }
+
+    /*for (int i = 0; i < 5; i++){
+        if (contains(attempt[i], solution) != -1){
+            yellowPos.push_back(i);
+        }
+    }
+    for (int i = 0; i < greenPos.size(); i++){
+        cout << greenPos[i] << ", ";
+    }
+    for (int i = 0; i < yellowPos.size(); i++){
+        cout << yellowPos[i] << ", ";
+    }*/
+
+    std::cout << std::endl;
+}
+
+
 #endif
