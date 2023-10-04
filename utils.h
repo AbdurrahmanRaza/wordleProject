@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include<vector>
 
 #define RESET "\033[0m"
 #define GREEN_BG "\033[42;30m"
@@ -79,6 +80,13 @@ int contains(char character, std::string word){
         if (word[i] == character) return i;
     }
     return -1;
+}
+
+bool contains(std::vector<int> v, int num){
+    for (int i = 0; i < v.size(); i++){
+        if (num == v[i]) return true;
+    }
+    return false;
 }
 
 #endif
