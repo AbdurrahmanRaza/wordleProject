@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -8,8 +9,11 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
+    // planning to use for keyboard display
+    
+
     //string solution = selectRandomWord();
-    string solution = "spurt";
+    string solution = "stare";
 
     string attempt;
     int numAttempts = 0;
@@ -17,9 +21,14 @@ int main(int argc, char* argv[]) {
     vector<int> greenPos;
     vector<int> yellowPos;
 
+    bool won = false;
+
     while ((numAttempts < 6)){
 
         cin >> attempt;
+
+        if (attempt == "TERMINATE") return 0; // for debug
+        if (attempt == "MAP") printMap(getLettersMap()); // for debug
 
         bool validAttempt = validifyAttempt(attempt);
 
@@ -31,12 +40,19 @@ int main(int argc, char* argv[]) {
 
         if (attempt == solution) {
             cout << "You got it! The word is " << solution << endl;
-            return 0;
+            won = true;
+            break;
         }
 
     }
 
-    cout << "Game over! The word is " << solution << endl;
+    if (!won) cout << "Game over! The word is " << solution << endl;
+
+    ofstream file;
+    file.open("stats.txt", ios::app);
+    if (file.is_open()){
+        file << solution << " " << won << " " << numAttempts << endl;
+    }
 
     return 0;
 }
