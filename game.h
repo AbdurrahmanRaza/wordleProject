@@ -7,6 +7,11 @@
 #include <vector>
 #include "utils.h"
 
+#define RESET "\033[0m"
+#define GREEN_BG "\033[42;30m"
+#define YELLOW_BG "\033[43;30m"
+#define GRAY_BG "\033[47;30m"
+
 void playWordle(){
     resetBoard();
     //string solution = selectRandomWord();
@@ -53,7 +58,35 @@ void playWordle(){
     std::cin.ignore();
     std::cout << std::endl << "Press [Enter] to continue: ";
     std::cin.get();
+}
+
+void showHowToPlay(){
+
+    system("clear");
+
+    std::cout << "=============================================" << std::endl;
+    std::cout << "                 HOW TO PLAY                 " << std::endl;
+    std::cout << "=============================================" << std::endl;
+    std::cout << "Guess the Wordle in 6 tries." << std::endl;
+    std::cout << std::endl;
+    std::cout << "HOW TO PLAY:" << std::endl;
+    std::cout << "- Each guess must be a valid 5 letter word." << std::endl;
+    std::cout << "- The color of the tiles will change to show" << std::endl;
+    std::cout << "  you how close your guess was to the word." << std::endl;
+    std::cout << std::endl;
+    std::cout << "| " << GREEN_BG << "w" << RESET << " e a r y |" << std::endl;
+    std::cout << "'w' is in the word and in the correct spot." << std::endl;
+    std::cout << std::endl;
+    std::cout << "| p " << YELLOW_BG << "i" << RESET << " l l s |" << std::endl;
+    std::cout << "'i' is in the word but in the wrong spot." << std::endl;
+    std::cout << std::endl;
+    std::cout << "| v a g " << GRAY_BG << "u" << RESET << " e |" << std::endl;
+    std::cout << "'u' is not in the word in any spot." << std::endl;
+
     std::cin.ignore();
+    std::cout << std::endl << "Press [Enter] to continue: ";
+    std::cin.get();
+
 }
 
 #endif

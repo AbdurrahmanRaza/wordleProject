@@ -195,7 +195,4 @@ void setLetterInMap(std::map<char, int> &letterMap, char letter, int status){
     std::cout << letterMap[letter] << std::endl;
 }
 
-
-// ENTIRE PLAY FUNCTION
-
 #endif
