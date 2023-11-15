@@ -28,8 +28,8 @@ int main(int argc, char* argv[]) {
 
         if (menuOption == 1) playWordle();
         else if (menuOption == 2) showHowToPlay();
-        else if (menuOption == 3);
-        else if (menuOption == 4);
+        else if (menuOption == 3) showStats();
+        else if (menuOption == 4) resetStats();
         else if (menuOption == 5) break;
         system("clear");
     }

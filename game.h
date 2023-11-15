@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <map>
+#include <string>
 #include <vector>
 #include "utils.h"
 
@@ -14,8 +16,8 @@
 
 void playWordle(){
     resetBoard();
-    //string solution = selectRandomWord();
-    std::string solution = "stare";
+    std::string solution = selectRandomWord();
+    //std::string solution = "stare";
 
     std::string attempt;
     int numAttempts = 0;
@@ -54,6 +56,7 @@ void playWordle(){
     if (file.is_open()){
         file << solution << " " << won << " " << numAttempts << std::endl;
     }
+    file.close();
 
     std::cin.ignore();
     std::cout << std::endl << "Press [Enter] to continue: ";
@@ -87,6 +90,91 @@ void showHowToPlay(){
     std::cout << std::endl << "Press [Enter] to continue: ";
     std::cin.get();
 
+}
+
+void showStats(){
+
+    system("clear");
+
+    std::vector<std::string> allWords = {};
+    std::vector<int> allWins = {};
+    std::vector<int> allAttempts = {};
+
+    int timesPlayed = 0;
+    int averageAttempts = 0;
+    float winPercent = 0.0;
+    int currentStreak = 0;
+    int longestStreak = 0;
+
+    std::ifstream file;
+    file.open("stats.txt");
+    if (file.is_open()){
+        std::string line;
+        while(std::getline(file, line)){
+            timesPlayed++;
+            
+            std::string currentWord = "";
+            for (int i = 0; i < 5; i++) { currentWord.push_back(line[i]); }
+            allWords.push_back(currentWord);
+           
+            std::string currentWin; 
+            currentWin += line[6];
+            allWins.push_back(std::stoi(currentWin));
+
+            std::string currentAttempts; 
+            currentAttempts += line[8];
+            allAttempts.push_back(std::stoi(currentAttempts));
+        }
+    }
+    file.close();
+
+    if (timesPlayed > 0){
+        for (int i = 0; i < timesPlayed; i++){
+            averageAttempts += allAttempts[i];
+            winPercent += 1.0 * allWins[i];
+            if (allWins[i] == 1) currentStreak++;
+            else {
+                if (currentStreak > longestStreak) longestStreak = currentStreak;
+                currentStreak = 0;
+            }
+        }
+        averageAttempts /= timesPlayed;
+        winPercent = 100.0 * winPercent / (1.0 * timesPlayed);
+        if (currentStreak > longestStreak) longestStreak = currentStreak;
+    }
+
+    std::cout << "==========================" << std::endl;
+    std::cout << "    STATISTICS SUMMARY    " << std::endl;
+    std::cout << "==========================" << std::endl;
+    std::cout << "Times Played: " << timesPlayed << std::endl;
+    std::cout << "Average Attempts: " << averageAttempts << std::endl;
+    std::cout << "Win Percentage: " << std::setprecision(3) << winPercent << "%" << std::endl;
+    std::cout << "Current Streak: " << currentStreak << std::endl;
+    std::cout << "Longest Streak: " << longestStreak << std::endl;
+    std::cout << std::endl;
+    std::cout << "--------------------------" << std::endl;
+    std::cout << "WORD     ATTEMPTS      WIN" << std::endl;
+    std::cout << "--------------------------" << std::endl;
+    
+    for (int i = 0; i < timesPlayed; i++){
+        std::string winOrlose;
+        if (allWins[i] == 1) winOrlose = "Yes";
+        else winOrlose = " No";
+        std::cout << allWords[i] << "           " << allAttempts[i] << "      " << winOrlose << std::endl;
+    }
+
+    std::cin.ignore();
+    std::cout << std::endl << "Press [Enter] to continue: ";
+    std::cin.get();
+}
+
+void resetStats(){
+    std::ofstream file;
+    file.open("stats.txt", std::ios::out);
+    if (file.is_open()){
+        file.clear();
+    }
+    file.close();
 }
 
 #endif
