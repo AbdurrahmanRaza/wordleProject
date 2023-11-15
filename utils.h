@@ -6,14 +6,17 @@
 #include <map>
 #include <vector>
 
-#include "../keyboard/keyboard.h"
-
 #define RESET "\033[0m"
 #define GREEN_BG "\033[42;30m"
 #define YELLOW_BG "\033[43;30m"
 #define GRAY_BG "\033[47;30m"
 
 std::vector<std::string> allAttemptedWords;
+
+std::map<char, int> lettersMap = { // int guide: 0 is unused, 1 is gray, 2 is yellow, 3 is green
+    {'a',0}, {'b',0}, {'c',0}, {'d',0}, {'e',0}, {'f',0}, {'g',0}, {'h',0}, {'i',0}, {'j',0}, {'k',0}, {'l',0}, {'m',0},
+    {'n',0}, {'o',0}, {'p',0}, {'q',0}, {'r',0}, {'s',0}, {'t',0}, {'u',0}, {'v',0}, {'w',0}, {'x',0}, {'y',0}, {'z',0}
+};
 
 std::string selectRandomWord(){
     std::ifstream file;
@@ -131,7 +134,7 @@ void checkAttempt(std::string attempt, std::string solution, std::vector<int> gr
             //solution[i] = '-';
             //std::cout << green(attempt[i]) << " ";
             attemptedWord += green(attempt[i]) + " ";
-            updateKeyboard(attempt[i], 3);
+            lettersMap[attempt[i]] = 3;
             //greenPos.push_back(i);
         }
         else if (contains(attempt[i], solution) != -1) {
@@ -144,13 +147,13 @@ void checkAttempt(std::string attempt, std::string solution, std::vector<int> gr
                 //solution[contains(attempt[i], solution)] = '-';
                 //std::cout << yellow(attempt[i]) << " ";
                 attemptedWord += yellow(attempt[i]) + " ";
-                if (lettersMap[attempt[i]] < 2) updateKeyboard(attempt[i], 2);
+                if (lettersMap[attempt[i]] < 2) lettersMap[attempt[i]] = 2;
             }
         }
         else {
             //std::cout << gray(attempt[i]) << " ";
             attemptedWord += gray(attempt[i]) + " ";
-            if (lettersMap[attempt[i]] < 1) updateKeyboard(attempt[i], 1);
+            if (lettersMap[attempt[i]] < 1) lettersMap[attempt[i]] = 1;
         }
     }
 
@@ -166,13 +169,23 @@ void checkAttempt(std::string attempt, std::string solution, std::vector<int> gr
         cout << yellowPos[i] << ", ";
     }*/
 
-    canPrintKeyboard = true;
-
     std::cout << attemptedWord;
 
     allAttemptedWords.push_back(attemptedWord);
 
+    std::ofstream file;
+    file.open("../keyboard/lettersMap.txt", std::ios::out);
+    if (file.is_open()){
+        for (const auto &pair : lettersMap){
+            
+            file << pair.first << pair.second << std::endl;
+        }
+    }
+    file.close();
+
     std::cout << std::endl;
+
+    
 }
 
 void printBoard(){
@@ -193,6 +206,16 @@ void setLetterInMap(std::map<char, int> &letterMap, char letter, int status){
     std::cout << letterMap[letter] << std::endl;
     letterMap[letter] = status;
     std::cout << letterMap[letter] << std::endl;
+}
+
+void printMap(std::map<char, int> m) {
+    int count = 0;
+    for (const auto &pair : m){
+        count++;
+        std::cout << pair.first << pair.second << " ";
+        if (count == 13) std::cout << std::endl;
+        if (count == 26) std::cout << std::endl;
+    }
 }
 
 #endif

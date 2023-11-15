@@ -32,7 +32,7 @@ void playWordle(){
         std::cout << "Attempt " << numAttempts+1 << ": ";
         std::cin >> attempt;
 
-        if (attempt == "MAP") printMap(getLettersMap()); // for debug
+        if (attempt == "MAP") printMap(lettersMap); // for debug
 
         bool validAttempt = validifyAttempt(attempt);
 
