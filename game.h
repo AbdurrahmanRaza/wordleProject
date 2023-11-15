@@ -175,6 +175,8 @@ void resetStats(){
         file.clear();
     }
     file.close();
+
+    showStats();
 }
 
 #endif

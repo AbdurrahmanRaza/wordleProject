@@ -1,5 +1,0 @@
-trick 1 4
-steep 1 3
-awoke 1 3
-tower 0 6
-sedan 1 6
