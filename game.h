@@ -14,10 +14,9 @@
 #define YELLOW_BG "\033[43;30m"
 #define GRAY_BG "\033[47;30m"
 
-void playWordle(){
+void playWordle(std::string w = selectRandomWord(), std::vector<std::string> testInputs = {}){
     resetBoard();
-    std::string solution = selectRandomWord();
-    //std::string solution = "stare";
+    std::string solution = w;
 
     std::string attempt;
     int numAttempts = 0;
@@ -28,11 +27,17 @@ void playWordle(){
     bool won = false;
     printBoard();
 
-    while ((numAttempts < 6)){
-        std::cout << "Attempt " << numAttempts+1 << ": ";
-        std::cin >> attempt;
+    bool isTest = false;
+    if (testInputs.size() > 0) isTest = true;
 
-        if (attempt == "MAP") printMap(lettersMap); // for debug
+    while ((numAttempts < 6)){
+        if (isTest) {
+            attempt = testInputs[numAttempts];
+        }
+        else {
+            std::cout << "Attempt " << numAttempts+1 << ": ";
+            std::cin >> attempt;
+        }
 
         bool validAttempt = validifyAttempt(attempt);
 
@@ -51,16 +56,22 @@ void playWordle(){
     
     if (!won) std::cout << "Game over! The word is " << solution << std::endl;
 
-    std::ofstream file;
-    file.open("stats.txt", std::ios::app);
-    if (file.is_open()){
-        file << solution << " " << won << " " << numAttempts << std::endl;
-    }
-    file.close();
+    if (!isTest) {
+        std::ofstream file;
+        file.open("stats.txt", std::ios::app);
+        if (file.is_open()){
+            file << solution << " " << won << " " << numAttempts << std::endl;
+        }
+        file.close();
 
-    std::cin.ignore();
-    std::cout << std::endl << "Press [Enter] to continue: ";
-    std::cin.get();
+        std::cin.ignore();
+        std::cout << std::endl << "Press [Enter] to continue: ";
+        std::cin.get();
+    }
+}
+
+std::vector<std::string> getAttemptedWordsInLatestGame(){
+    return allAttemptedWords;
 }
 
 void showHowToPlay(){

@@ -8,10 +8,8 @@ using namespace std;
 #include "game.h"
 
 int main(int argc, char* argv[]) {
-
     system("clear");
     while (true){
-        string menuText;
         cout << "=========================" << endl;
         cout << "    WELCOME TO WORDLE    " << endl;
         cout << "========================="  << endl;
@@ -23,14 +21,14 @@ int main(int argc, char* argv[]) {
         cout << "5. Exit" << endl;
         cout << endl;
         cout << "Select an option: ";
-        int menuOption = 0;
+        string menuOption = "0";
         cin >> menuOption;
 
-        if (menuOption == 1) playWordle();
-        else if (menuOption == 2) showHowToPlay();
-        else if (menuOption == 3) showStats();
-        else if (menuOption == 4) resetStats();
-        else if (menuOption == 5) break;
+        if (menuOption == "1") playWordle();
+        else if (menuOption == "2") showHowToPlay();
+        else if (menuOption == "3") showStats();
+        else if (menuOption == "4") resetStats();
+        else if (menuOption == "5") break;
         system("clear");
     }
 

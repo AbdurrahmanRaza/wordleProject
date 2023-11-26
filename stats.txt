@@ -1,5 +1,1 @@
-swine 0 6
-bigot 0 6
-scoop 0 6
-hound 0 6
-smelt 1 6
+strap 0 6
