@@ -14,6 +14,8 @@
 #define YELLOW_BG "\033[43;30m"
 #define GRAY_BG "\033[47;30m"
 
+extern void resetKeyboardTextFile();
+
 void playWordle(std::string w = selectRandomWord(), std::vector<std::string> testInputs = {}){
     resetBoard();
     std::string solution = w;
@@ -68,6 +70,8 @@ void playWordle(std::string w = selectRandomWord(), std::vector<std::string> tes
         std::cout << std::endl << "Press [Enter] to continue: ";
         std::cin.get();
     }
+
+    resetKeyboardTextFile();
 }
 
 std::vector<std::string> getAttemptedWordsInLatestGame(){

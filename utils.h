@@ -18,6 +18,26 @@ std::map<char, int> lettersMap = { // int guide: 0 is unused, 1 is gray, 2 is ye
     {'n',0}, {'o',0}, {'p',0}, {'q',0}, {'r',0}, {'s',0}, {'t',0}, {'u',0}, {'v',0}, {'w',0}, {'x',0}, {'y',0}, {'z',0}
 };
 
+void updateKeyboardTextFile(){
+    std::ofstream file;
+    file.open("../keyboard/lettersMap.txt", std::ios::out);
+    if (file.is_open()){
+        for (const auto &pair : lettersMap){
+            
+            file << pair.first << pair.second << std::endl;
+        }
+    }
+    file.close();
+}
+
+void resetKeyboardTextFile(){
+    lettersMap = { // int guide: 0 is unused, 1 is gray, 2 is yellow, 3 is green
+        {'a',0}, {'b',0}, {'c',0}, {'d',0}, {'e',0}, {'f',0}, {'g',0}, {'h',0}, {'i',0}, {'j',0}, {'k',0}, {'l',0}, {'m',0},
+        {'n',0}, {'o',0}, {'p',0}, {'q',0}, {'r',0}, {'s',0}, {'t',0}, {'u',0}, {'v',0}, {'w',0}, {'x',0}, {'y',0}, {'z',0} 
+    };
+    updateKeyboardTextFile();
+}
+
 std::string selectRandomWord(){
     std::ifstream file;
     file.open("words.txt", std::ios::in);
@@ -87,13 +107,6 @@ int contains(char character, std::string word){
         if (word[i] == character) return i;
     }
     return -1;
-}
-
-bool contains(std::vector<int> v, int num){
-    for (int i = 0; i < v.size(); i++){
-        if (num == v[i]) return true;
-    }
-    return false;
 }
 
 bool validifyAttempt(std::string attempt){
@@ -173,15 +186,7 @@ void checkAttempt(std::string attempt, std::string solution, std::vector<int> gr
 
     allAttemptedWords.push_back(attemptedWord);
 
-    std::ofstream file;
-    file.open("../keyboard/lettersMap.txt", std::ios::out);
-    if (file.is_open()){
-        for (const auto &pair : lettersMap){
-            
-            file << pair.first << pair.second << std::endl;
-        }
-    }
-    file.close();
+    updateKeyboardTextFile();
 
     std::cout << std::endl;
 

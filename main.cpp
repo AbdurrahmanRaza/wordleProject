@@ -8,6 +8,7 @@ using namespace std;
 #include "game.h"
 
 int main(int argc, char* argv[]) {
+    resetKeyboardTextFile();
     system("clear");
     while (true){
         cout << "=========================" << endl;

@@ -3,3 +3,4 @@ bully 0 6
 bully 0 6
 stale 1 4
 house 1 1
+range 0 6
