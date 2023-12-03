@@ -56,14 +56,14 @@ void playWordle(std::string w = selectRandomWord(), std::vector<std::string> tes
     
     if (!won) std::cout << "Game over! The word is " << solution << std::endl;
 
-    if (!isTest) {
-        std::ofstream file;
-        file.open("stats.txt", std::ios::app);
-        if (file.is_open()){
-            file << solution << " " << won << " " << numAttempts << std::endl;
-        }
-        file.close();
+    std::ofstream file;
+    file.open("stats.txt", std::ios::app);
+    if (file.is_open()){
+        file << solution << " " << won << " " << numAttempts << std::endl;
+    }
+    file.close();
 
+    if (!isTest) {
         std::cin.ignore();
         std::cout << std::endl << "Press [Enter] to continue: ";
         std::cin.get();
@@ -179,7 +179,7 @@ void showStats(){
     std::cin.get();
 }
 
-void resetStats(){
+void resetStats(bool showStatsAfter = true){
     std::ofstream file;
     file.open("stats.txt", std::ios::out);
     if (file.is_open()){
@@ -187,7 +187,7 @@ void resetStats(){
     }
     file.close();
 
-    showStats();
+    if (showStatsAfter) showStats();
 }
 
 #endif

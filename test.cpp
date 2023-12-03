@@ -132,6 +132,41 @@ Context(TODO){
         Assert::That(result, Equals(expected));
     }
 
+    Spec(stats_reset){
+        resetStats(false);
+        std::vector<std::string> result = {};
+        std::ifstream file;
+        file.open("stats.txt");
+        if (file.is_open()){
+            std::string line;
+            while(std::getline(file, line)){
+                result.push_back(line);
+            }
+        }
+        file.close();
+        std::vector<std::string> expected = {};
+        Assert::That(result, Equals(expected));
+    }
+
+    Spec(stats_works_as_intended){
+        resetStats(false);
+        playWordle("stale", {"house", "snake", "state", "stale"});
+        playWordle("bully", {"house", "house", "house", "house", "house", "house"});
+
+        std::vector<std::string> result = {};
+        std::ifstream file;
+        file.open("stats.txt");
+        if (file.is_open()){
+            std::string line;
+            while(std::getline(file, line)){
+                result.push_back(line);
+            }
+        }
+        file.close();
+        std::vector<std::string> expected = {"stale 1 4", "bully 0 6"};
+        Assert::That(result, Equals(expected));
+    }
+
     // Tests below no longer work with the program's current structure
 
     /*Spec(test_state){
